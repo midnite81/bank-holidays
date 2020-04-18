@@ -1,0 +1,50 @@
+{
+    "name": "midnite81/bank-holidays",
+    "description": "A library to get UK bank holidays",
+    "type": "library",
+    "require": {
+        "php": ">=5.5.9",
+        "nesbot/carbon": "^1.0|^2.0",
+        "php-http/curl-client": "^2.1",
+        "guzzlehttp/psr7": "^1.6",
+        "php-http/message": "^1.8",
+        "http-interop/http-factory-guzzle": "^1.0",
+        "midnite81/json-parser": "^1.0"
+    },
+    "require-dev": {
+        "laravel/framework": "^5.0|^6.0|^7.0",
+        "illuminate/support": "^5.0|^6.0|^7.0",
+        "phpunit/phpunit": "^6|^7|^8|^9",
+        "mockery/mockery": "^1.1",
+        "symfony/finder": "^3.4|^4.1",
+        "php-coveralls/php-coveralls": "^2.2",
+        "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simon Rogers",
+            "email": "webdev@centralblue.co.uk"
+        }
+    ],
+      "autoload": {
+              "psr-4": {
+                  "Midnite81\\BankHolidays\\": "src/",
+                  "Midnite81\\BankHolidays\\Tests\\": "tests/"
+              }
+          },
+          "autoload-dev": {
+              "psr-4": {
+                  "Midnite81\\\\Tests\\": "tests/"
+              }
+          },
+    "minimum-stability": "stable",
+    "extra": {
+        "component": "package",
+        "frameworks": [
+            "Laravel 5",
+            "Laravel 6",
+            "Laravel 7"
+        ]
+    }
+}

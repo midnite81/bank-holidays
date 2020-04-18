@@ -1,0 +1,99 @@
+# UK Bank Holidays
+
+This package integrates with the UK Government's Bank Holiday Json response. This package has been principally been
+designed for use with laravel, but is framework agnostic under the hood. 
+
+## Installation
+
+```
+composer require midnite81/bank-holidays
+```
+
+If you are using laravel 5.4 or less, you will need to register the Bank Holiday service provider. If you are using 5.5
+or greater then the package should be auto discovered.
+
+```
+ 'providers' => [
+      ...
+      \Midnite81\BankHolidays\BankHolidayServiceProvider::class,
+      ...
+  ];
+```
+
+You will need to publish the configuration file. To do this, please run
+
+```
+php artisan vendor:publish provider="Midnite81\BankHolidays\BankHolidayServiceProvider"
+```
+
+## Http standards
+
+To adhere to better standards, this package uses the popular and powerful PHP-HTTP library to make HTTP requests. 
+This allows you, should you wish, to use your own HTTP Client instead of the default provided with this package. 
+For more information on PHP-HTTP, please visit [php-http.org](http://docs.php-http.org/en/latest/).
+
+## Laravel usage example
+
+**Checking a date to see if it's a bank holiday**
+
+```php
+
+use Midnite81\BankHolidays\Contracts\IBankHoliday;
+
+public function myFunction(IBankHoliday $bankHoliday)
+{ 
+    $bankHoliday = $bankHoliday->isBankHoliday(
+        \Carbon\Carbon::create(2020, 01, 01), 
+        \Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES
+    );
+
+    // if the date provided is a bank holiday a BankHolidayEntity is returned
+    // otherwise it returns null.
+   
+    if ($bankHoliday == null) {
+        // the date provided is not a bank holiday
+    }
+    
+    if ($bankHoliday != null) { 
+        echo $bankHoliday->title; // returns "New Year's Day"
+        echo $bankHoliday->date; // returns Carbon date object    
+    } 
+}
+```
+
+**Get all bank holiday dates**
+
+```php
+
+use Midnite81\BankHolidays\Contracts\IBankHoliday;
+
+public function myFunction(IBankHoliday $bankHoliday)
+{ 
+    $bankHolidays = $bankHoliday->getAll(\Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES);
+
+    foreach($bankHolidays as $bankHoliday) { 
+        echo $bankHoliday->title . "<br>\n";  
+    }
+}
+```
+
+## Bank Holiday Entity
+
+The bank holiday entity has the following properties.
+
+**title** - the title of the holiday - e.g. New Year's Day
+**date** - a carbon instance of the bank holiday date
+**notes** - any notes about the bank holiday
+**bunting** - presumably whether bunting is displayed
+**territory** - the territory the bank holiday applies to
+
+## Territories
+
+The following territories are available
+
+```php
+Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES // England and Wales
+Midnite81\BankHolidays\Enums\Territory::SCOTLAND // Scotland
+Midnite81\BankHolidays\Enums\Territory::NORTHERN_IRELAND // Northern Ireland
+Midnite81\BankHolidays\Enums\Territory::ALL // All territories (e.g. England, Wales, Scotland and Northern Ireland)
+```
