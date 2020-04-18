@@ -96,6 +96,12 @@ public function someFunction()
     $client = new \Midnite81\BankHolidays\Services\Client(null, null, $config);
     $bankHoliday = new \Midnite81\BankHolidays\BankHoliday($client, $cache, $config);
 
+    // Once you have $bankHoliday instantiated you can use the following methods
+
+    $bankHoliday->getAll(int $territory);
+    $bankHoliday->isBankHoliday(Carbon $date, int $territory);
+
+    // for territory please use the constants in `Midnite81\BankHolidays\Enums\Territory`
 }
 
 ```
@@ -104,11 +110,11 @@ public function someFunction()
 
 The bank holiday entity has the following properties.
 
-**title** - the title of the holiday - e.g. New Year's Day
-**date** - a carbon instance of the bank holiday date
-**notes** - any notes about the bank holiday
-**bunting** - presumably whether bunting is displayed
-**territory** - the territory the bank holiday applies to
+**title** - the title of the holiday - e.g. New Year's Day   
+**date** - a carbon instance of the bank holiday date    
+**notes** - any notes about the bank holiday    
+**bunting** - presumably whether bunting is displayed    
+**territory** - the territory the bank holiday applies to    
 
 ## Territories
 
