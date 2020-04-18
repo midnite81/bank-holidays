@@ -12,6 +12,7 @@ use Midnite81\BankHolidays\Enums\TerritoryName;
 use Midnite81\BankHolidays\Exceptions\MissingConfigKeyException;
 use Midnite81\BankHolidays\Exceptions\RequestFailedException;
 use Midnite81\BankHolidays\Exceptions\TerritoryDoesNotExistException;
+use Midnite81\JsonParser\JsonParse;
 
 class BankHoliday implements IBankHoliday
 {

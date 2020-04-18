@@ -26,8 +26,8 @@ class ClientTest extends LaravelTestCase
 
         $data = $client->getData();
 
-        $this->assertTrue(gettype($data) == 'string');
-        $this->assertTrue(preg_match('/{/', $data) == 1);
+        $this->assertTrue(gettype($data) == 'object');
+        $this->assertTrue(property_exists($data, 'england-and-wales'));
     }
 
     /**
@@ -39,7 +39,7 @@ class ClientTest extends LaravelTestCase
 
         $data = $client->getData();
 
-        $this->assertTrue(gettype($data) == 'string');
-        $this->assertTrue(preg_match('/{/', $data) == 1);
+        $this->assertTrue(gettype($data) == 'object');
+        $this->assertTrue(property_exists($data, 'england-and-wales'));
     }
 }

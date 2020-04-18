@@ -10,6 +10,7 @@ use Http\Message\RequestFactory;
 use Midnite81\BankHolidays\Contracts\Services\IClient;
 use Midnite81\BankHolidays\Exceptions\MissingConfigKeyException;
 use Midnite81\BankHolidays\Exceptions\RequestFailedException;
+use Midnite81\JsonParser\JsonParse;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class Client implements IClient
@@ -65,7 +66,13 @@ class Client implements IClient
             throw new RequestFailedException($e);
         }
 
-        return $response->getBody()->getContents();
+        $responseContent = $response->getBody()->getContents();
+
+        if (gettype($responseContent) == 'string') {
+            $responseContent = JsonParse::decode($responseContent);
+        }
+
+        return $responseContent;
     }
 
     /**
