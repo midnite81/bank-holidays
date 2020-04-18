@@ -8,6 +8,7 @@ php:
   - 7.4
 
 before_script:
+  - rm -rf composer.lock
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction --dev
 
