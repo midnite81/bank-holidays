@@ -31,14 +31,6 @@ class BankHolidayServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(IBankHoliday::class, function ($app) {
-            return new BankHoliday(
-                app(IClient::class),
-                app(ICache::class),
-                $app['config']
-            );
-        });
-
         $this->app->bind(IClient::class, function ($app) {
 
             $httpClient = empty($app['config']['bank-holidays']['http-client'])
@@ -55,8 +47,18 @@ class BankHolidayServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(ICache::class, function ($app) {
-            return $app['config']['cache-class'];
+            return $app->make($app['config']['bank-holidays']['cache-class']);
         });
+
+        $this->app->bind(IBankHoliday::class, function ($app) {
+            return new BankHoliday(
+                app()->make(IClient::class),
+                app()->make(ICache::class),
+                $app['config']['bank-holidays']
+            );
+        });
+
+        $this->app->alias(IBankHoliday::class, 'bank-holiday');
 
         $this->mergeConfigFrom(
             __DIR__ . '/../config/bank-holidays.php',
