@@ -239,7 +239,9 @@ class BankHolidayTest extends TestCase
     public function when_config_is_missing_cache_key_expect_throw()
     {
         $this->expectException(MissingConfigKeyException::class);
-        $this->expectErrorMessage("The configuration key 'cache-key' is missing");
+        if (method_exists($this, 'expectErrorMessage')) {
+            $this->expectErrorMessage("The configuration key 'cache-key' is missing");
+        }
         $sut = new BankHoliday($this->client, $this->cache, []);
     }
 

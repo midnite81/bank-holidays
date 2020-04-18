@@ -33,7 +33,9 @@ class ClientTest extends LaravelTestCase
     public function given_config_not_passed_expect_exception_thrown()
     {
         $this->expectException(MissingConfigKeyException::class);
-        $this->expectErrorMessage("The configuration key 'bank-holiday-url' is missing");
+        if (method_exists($this, 'expectErrorMessage')) {
+            $this->expectErrorMessage("The configuration key 'bank-holiday-url' is missing");
+        }
 
         $sut = new Client(null, null, []);
     }
