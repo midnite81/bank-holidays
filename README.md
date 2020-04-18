@@ -92,8 +92,8 @@ The bank holiday entity has the following properties.
 The following territories are available
 
 ```php
-Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES // England and Wales
-Midnite81\BankHolidays\Enums\Territory::SCOTLAND // Scotland
-Midnite81\BankHolidays\Enums\Territory::NORTHERN_IRELAND // Northern Ireland
+Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES // England and Wales   
+Midnite81\BankHolidays\Enums\Territory::SCOTLAND // Scotland   
+Midnite81\BankHolidays\Enums\Territory::NORTHERN_IRELAND // Northern Ireland   
 Midnite81\BankHolidays\Enums\Territory::ALL // All territories (e.g. England, Wales, Scotland and Northern Ireland)
 ```
