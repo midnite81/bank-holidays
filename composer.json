@@ -5,7 +5,7 @@
     "require": {
         "php": ">=5.5.9",
         "nesbot/carbon": "^1.0|^2.0",
-        "php-http/curl-client": "^2.1",
+        "php-http/curl-client": "^1.0|^2.1",
         "guzzlehttp/psr7": "^1.6",
         "php-http/message": "^1.8",
         "http-interop/http-factory-guzzle": "^1.0",
