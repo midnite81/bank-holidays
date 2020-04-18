@@ -26,6 +26,11 @@ You will need to publish the configuration file. To do this, please run
 php artisan vendor:publish provider="Midnite81\BankHolidays\BankHolidayServiceProvider"
 ```
 
+## Limitation
+
+The UK Government provides the bank holiday json feed, this at the time of writing only includes the 
+years between 2015 and 2021. 
+
 ## Http standards
 
 To adhere to better standards, this package uses the popular and powerful PHP-HTTP library to make HTTP requests. 
