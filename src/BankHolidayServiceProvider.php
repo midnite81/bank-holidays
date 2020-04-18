@@ -4,6 +4,7 @@ namespace Midnite81\BankHolidays;
 
 use Illuminate\Support\ServiceProvider;
 use Midnite81\BankHolidays\Contracts\Drivers\ICache;
+use Midnite81\BankHolidays\Contracts\IBankHoliday;
 use Midnite81\BankHolidays\Contracts\Services\IClient;
 use Midnite81\BankHolidays\Services\Client;
 
@@ -30,11 +31,20 @@ class BankHolidayServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(IBankHoliday::class, function ($app) {
+            return new BankHoliday(
+                app(IClient::class),
+                app(ICache::class),
+                $app['config']
+            );
+        });
+
         $this->app->bind(IClient::class, function ($app) {
 
             $httpClient = empty($app['config']['bank-holidays']['http-client'])
                 ? null : new $app['config']['bank-holidays']['http-client'];
-            $requestFactory = empty($app['config']['bank-holidays']['request-factory'])
+            $requestFactory
+                        = empty($app['config']['bank-holidays']['request-factory'])
                 ? null : new $app['config']['bank-holidays']['request-factory'];
 
             return new Client(
