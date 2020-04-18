@@ -1,4 +1,4 @@
-# UK Bank Holidays
+# UK Bank Holidays [![Latest Stable Version](https://poser.pugx.org/midnite81/bank-holiday/version)](https://packagist.org/packages/midnite81/bank-holiday) [![Total Downloads](https://poser.pugx.org/midnite81/bank-holiday/downloads)](https://packagist.org/packages/midnite81/bank-holiday) [![Latest Unstable Version](https://poser.pugx.org/midnite81/bank-holiday/v/unstable)](https://packagist.org/packages/midnite81/bank-holiday) [![License](https://poser.pugx.org/midnite81/bank-holiday/license.svg)](https://packagist.org/packages/midnite81/bank-holiday) [![Build](https://travis-ci.org/midnite81/bank-holiday.svg?branch=master)](https://travis-ci.org/midnite81/bank-holiday) [![Coverage Status](https://coveralls.io/repos/github/midnite81/bank-holiday/badge.svg?branch=master)](https://coveralls.io/github/midnite81/bank-holiday?branch=master)
 
 This package integrates with the UK Government's Bank Holiday Json response. This package has been principally been
 designed for use with laravel, but is framework agnostic under the hood. 
@@ -10,7 +10,7 @@ composer require midnite81/bank-holidays
 ```
 
 If you are using laravel 5.4 or less, you will need to register the Bank Holiday service provider. If you are using 5.5
-or greater then the package should be auto discovered.
+or greater than the package should be auto discovered.
 
 ```
  'providers' => [
