@@ -77,6 +77,29 @@ public function myFunction(IBankHoliday $bankHoliday)
 }
 ```
 
+## Usage without laravel
+
+```php
+
+public function someFunction()
+{ 
+    $config = [
+       'cache-duration' => 60 * 60 * 24,
+       'bank-holiday-url' => 'https://www.gov.uk/bank-holidays.json',
+       'cache-key' => 'midnite81-bank-holidays',
+       'cache-class' => YourCacheClass::class, // you will need to create a cache class 
+       'http-client' => null,
+       'request-factory' => null
+    ];
+
+    $cache = new YourCacheClass(); // this must implement \Midnite81\BankHolidays\Contracts\Drivers\ICache
+    $client = new \Midnite81\BankHolidays\Services\Client(null, null, $config);
+    $bankHoliday = new \Midnite81\BankHolidays\BankHoliday($client, $cache, $config);
+
+}
+
+```
+
 ## Bank Holiday Entity
 
 The bank holiday entity has the following properties.
