@@ -3,12 +3,15 @@
 namespace Midnite81\BankHolidays;
 
 use Carbon\Carbon;
+use Exception;
 use Midnite81\BankHolidays\Contracts\Drivers\ICache;
+use Midnite81\BankHolidays\Contracts\Drivers\IFileSystem;
 use Midnite81\BankHolidays\Contracts\IBankHoliday;
 use Midnite81\BankHolidays\Contracts\Services\IClient;
 use Midnite81\BankHolidays\Entities\BankHolidayEntity;
 use Midnite81\BankHolidays\Enums\Territory;
 use Midnite81\BankHolidays\Enums\TerritoryName;
+use Midnite81\BankHolidays\Exceptions\FileNotFoundException;
 use Midnite81\BankHolidays\Exceptions\MissingConfigKeyException;
 use Midnite81\BankHolidays\Exceptions\RequestFailedException;
 use Midnite81\BankHolidays\Exceptions\TerritoryDoesNotExistException;
@@ -37,22 +40,33 @@ class BankHoliday implements IBankHoliday
     protected $data;
 
     /**
+     * @var Exception
+     */
+    protected $systemFailure;
+    /**
+     * @var IFileSystem
+     */
+    protected $fileSystem;
+
+    /**
      * BankHoliday constructor.
      *
-     * @param IClient $client
-     * @param ICache  $cache
-     * @param array   $config
+     * @param IClient     $client
+     * @param ICache      $cache
+     * @param IFileSystem $fileSystem
+     * @param array       $config
      *
-     * @throws RequestFailedException
      * @throws MissingConfigKeyException
      */
     public function __construct(
         IClient $client,
         ICache $cache,
+        IFileSystem $fileSystem,
         array $config = []
     ) {
         $this->client = $client;
         $this->cache  = $cache;
+        $this->fileSystem = $fileSystem;
         $this->processConfig($config);
         $this->data = $this->hasOrGetData();
     }
@@ -61,14 +75,32 @@ class BankHoliday implements IBankHoliday
      * @param Carbon $date
      * @param int    $territory
      *
-     * @return null|BankHolidayEntity
+     * @return bool
      * @throws TerritoryDoesNotExistException
+     * @throws Exception
      */
     public function isBankHoliday(
         Carbon $date,
-        int $territory = Territory::ENGLAND_AND_WALES
+        $territory = Territory::ENGLAND_AND_WALES
     ) {
-        $carbonKey = $date->format('Y-m-d');
+        $this->checkForExceptions();
+
+        return $this->bankHolidayDetail($date, $territory) != null;
+    }
+
+    /**
+     * @param Carbon $date
+     * @param int    $territory
+     *
+     * @return null|BankHolidayEntity
+     * @throws TerritoryDoesNotExistException
+     * @throws Exception
+     */
+    public function bankHolidayDetail(
+        Carbon $date,
+        $territory = Territory::ENGLAND_AND_WALES
+    ) {
+        $this->checkForExceptions();
 
         $england_and_wales = $this->getBankHolidayEntity(
             $date,
@@ -114,9 +146,12 @@ class BankHoliday implements IBankHoliday
      *
      * @return array
      * @throws TerritoryDoesNotExistException
+     * @throws Exception
      */
     public function getAll($territory = Territory::ENGLAND_AND_WALES)
     {
+        $this->checkForExceptions();
+
         $events = [];
 
         if (in_array(
@@ -124,7 +159,10 @@ class BankHoliday implements IBankHoliday
             [Territory::ENGLAND_AND_WALES, Territory::ALL]
         )
         ) {
-            $data = $this->getRegionalData(TerritoryName::ENGLAND_AND_WALES_KEY, TerritoryName::ENGLAND_AND_WALES);
+            $data   = $this->getRegionalData(
+                TerritoryName::ENGLAND_AND_WALES_KEY,
+                TerritoryName::ENGLAND_AND_WALES
+            );
             $events = array_merge($events, $data);
         }
 
@@ -133,7 +171,10 @@ class BankHoliday implements IBankHoliday
             [Territory::SCOTLAND, Territory::ALL]
         )
         ) {
-            $data = $this->getRegionalData(TerritoryName::SCOTLAND_KEY, TerritoryName::SCOTLAND);
+            $data   = $this->getRegionalData(
+                TerritoryName::SCOTLAND_KEY,
+                TerritoryName::SCOTLAND
+            );
             $events = array_merge($events, $data);
         }
 
@@ -142,7 +183,10 @@ class BankHoliday implements IBankHoliday
             [Territory::NORTHERN_IRELAND, Territory::ALL]
         )
         ) {
-            $data = $this->getRegionalData(TerritoryName::NORTHERN_IRELAND_KEY, TerritoryName::NORTHERN_IRELAND);
+            $data   = $this->getRegionalData(
+                TerritoryName::NORTHERN_IRELAND_KEY,
+                TerritoryName::NORTHERN_IRELAND
+            );
             $events = array_merge($events, $data);
         }
 
@@ -158,6 +202,10 @@ class BankHoliday implements IBankHoliday
     {
         if (!array_key_exists('cache-key', $config)) {
             throw new MissingConfigKeyException('cache-key');
+        }
+
+        if (!array_key_exists('failed-backup', $config)) {
+            throw new MissingConfigKeyException('failed-backup');
         }
 
         $this->config = $config;
@@ -205,7 +253,6 @@ class BankHoliday implements IBankHoliday
 
     /**
      * @return mixed
-     * @throws Exceptions\RequestFailedException
      */
     protected function hasOrGetData()
     {
@@ -213,7 +260,20 @@ class BankHoliday implements IBankHoliday
             return $this->cache->get($this->config['cache-key']);
         }
 
-        $data = $this->client->getData();
+        try {
+            $data = $this->client->getData();
+        } catch (RequestFailedException $e) {
+            if ($this->config['failure-backup']) {
+                try {
+                    $data
+                        = JsonParse::decode($this->fileSystem->get($this->getBackupFile()));
+                } catch (FileNotFoundException $e) {
+                    $this->systemFailure = $e;
+                }
+            } else {
+                $this->systemFailure = $e;
+            }
+        }
 
         $this->cache->put(
             $this->config['cache-key'],
@@ -261,5 +321,20 @@ class BankHoliday implements IBankHoliday
         }
 
         return $data;
+    }
+
+    protected function getBackupFile()
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . '../backup/bank-holiday.json';
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function checkForExceptions()
+    {
+        if ($this->systemFailure) {
+            throw $this->systemFailure;
+        }
     }
 }

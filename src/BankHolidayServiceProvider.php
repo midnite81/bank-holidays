@@ -4,6 +4,7 @@ namespace Midnite81\BankHolidays;
 
 use Illuminate\Support\ServiceProvider;
 use Midnite81\BankHolidays\Contracts\Drivers\ICache;
+use Midnite81\BankHolidays\Contracts\Drivers\IFileSystem;
 use Midnite81\BankHolidays\Contracts\IBankHoliday;
 use Midnite81\BankHolidays\Contracts\Services\IClient;
 use Midnite81\BankHolidays\Services\Client;
@@ -48,6 +49,10 @@ class BankHolidayServiceProvider extends ServiceProvider
 
         $this->app->bind(ICache::class, function ($app) {
             return $app->make($app['config']['bank-holidays']['cache-class']);
+        });
+
+        $this->app->bind(IFileSystem::class, function ($app) {
+            return $app->make($app['config']['bank-holidays']['filesystem-class']);
         });
 
         $this->app->bind(IBankHoliday::class, function ($app) {

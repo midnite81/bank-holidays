@@ -47,7 +47,7 @@ use Midnite81\BankHolidays\Contracts\IBankHoliday;
 
 public function myFunction(IBankHoliday $bankHoliday)
 { 
-    $bankHoliday = $bankHoliday->isBankHoliday(
+    $bankHoliday = $bankHoliday->bankHolidayDetail(
         \Carbon\Carbon::create(2020, 01, 01), 
         \Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES
     );
@@ -104,7 +104,7 @@ public function someFunction()
     // Once you have $bankHoliday instantiated you can use the following methods
 
     $bankHoliday->getAll(int $territory);
-    $bankHoliday->isBankHoliday(Carbon $date, int $territory);
+    $bankHoliday->bankHolidayDetail(Carbon $date, int $territory);
 
     // for territory please use the constants in `Midnite81\BankHolidays\Enums\Territory`
 }

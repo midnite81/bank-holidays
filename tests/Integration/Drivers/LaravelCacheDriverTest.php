@@ -6,7 +6,6 @@ use Midnite81\BankHolidays\Drivers\LaravelCacheDriver;
 use Midnite81\BankHolidays\Tests\Integration\LaravelTestCase;
 use Illuminate\Cache\Repository;
 use Mockery;
-use Mockery\Mock;
 
 class LaravelCacheDriverTest extends LaravelTestCase
 {
@@ -41,8 +40,10 @@ class LaravelCacheDriverTest extends LaravelTestCase
         $this->mockedApplication
             = Mockery::mock('Illuminate\Foundation\Application');
         $this->laravelCache = app('cache.store');
-        $this->sut = new LaravelCacheDriver($this->laravelCache,
-            $this->mockedApplication);
+        $this->sut = new LaravelCacheDriver(
+            $this->laravelCache,
+            $this->mockedApplication
+        );
         $this->testKey = 'test-key';
         $this->testValue = 'B37CU55';
     }
