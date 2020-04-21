@@ -22,7 +22,7 @@ class PhpFileSystemTest extends TestCase
     /**
      * @test
      */
-    public function given_get_invoked_expect_file_contents_retrieved()
+    public function givenGetInvokedExpectFileContentsRetrieved()
     {
         $path = join(DIRECTORY_SEPARATOR, ['..', '..', '..', 'backup', 'bank-holiday.json']);
 
@@ -35,7 +35,7 @@ class PhpFileSystemTest extends TestCase
      * @test
      * @expectedException \Midnite81\BankHolidays\Exceptions\FileNotFoundException
      */
-    public function given_get_invoked_when_file_not_available_expect_throw()
+    public function givenGetInvokedWhenFileNotAvailableExpectThrow()
     {
         $this->expectException(FileNotFoundException::class);
         $result = $this->sut->get('some-file-that-doesnt-exist.json');

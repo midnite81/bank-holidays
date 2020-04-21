@@ -16,7 +16,7 @@ class ClientTest extends LaravelTestCase
      * @throws MissingConfigKeyException
      * @throws RequestFailedException
      */
-    public function given_data_requested_expect_response()
+    public function givenDataRequestedExpectResponse()
     {
         $client = new Client(
             null,
@@ -33,7 +33,7 @@ class ClientTest extends LaravelTestCase
     /**
      * @test
      */
-    public function given_laravel_instantiation_expect_response()
+    public function givenLaravelInstantiationExpectResponse()
     {
         $client = $this->app->make(IClient::class);
 

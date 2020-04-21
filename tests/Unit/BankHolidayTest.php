@@ -66,7 +66,7 @@ class BankHolidayTest extends TestCase
      * @throws MissingConfigKeyException
      * @throws TerritoryDoesNotExistException
      */
-    public function given_data_in_the_cache_expect_client_not_called_and_data_returned()
+    public function givenDataInTheCacheExpectClientNotCalledAndDataReturned()
     {
         $this->setupCache();
         $this->client->shouldNotHaveReceived('getData');
@@ -75,7 +75,7 @@ class BankHolidayTest extends TestCase
             $this->client,
             $this->cache,
             $this->fileSystem,
-            ['cache-key' => 'bank-holiday-test', 'failed-backup' => true]
+            ['cache-key' => 'bank-holiday-test', 'failure-backup' => true]
         );
 
         $response = $sut->getAll(Territory::ALL);
@@ -89,7 +89,7 @@ class BankHolidayTest extends TestCase
      * @throws MissingConfigKeyException
      * @throws TerritoryDoesNotExistException
      */
-    public function given_data_not_in_the_cache_expect_client_called_and_data_returned()
+    public function givenDataNotInTheCacheExpectClientCalledAndDataReturned()
     {
         $json        = $this->testJson;
         $decodedJson = JsonParse::decode($json);
@@ -113,7 +113,7 @@ class BankHolidayTest extends TestCase
             [
                 'cache-key'      => 'bank-holiday-test',
                 'cache-duration' => 60,
-                'failed-backup'  => true
+                'failure-backup'  => true
             ]
         );
 
@@ -129,7 +129,7 @@ class BankHolidayTest extends TestCase
      * @throws MissingConfigKeyException
      * @throws TerritoryDoesNotExistException
      */
-    public function given_bank_holiday_exists_when_england_and_wales_passed_expect_entity_returned()
+    public function givenBankHolidayExistsWhenEnglandAndWalesPassedExpectEntityReturned()
     {
         $this->setupCache();
         $newYearsDay = Carbon::create(2020, 01, 01);
@@ -140,7 +140,7 @@ class BankHolidayTest extends TestCase
             [
                 'cache-key'      => 'bank-holiday-test',
                 'cache-duration' => 60,
-                'failed-backup'  => true
+                'failure-backup'  => true
             ]
         );
 
@@ -165,7 +165,7 @@ class BankHolidayTest extends TestCase
      * @throws MissingConfigKeyException
      * @throws TerritoryDoesNotExistException
      */
-    public function given_bank_holiday_exists_when_scotland_passed_expect_entity_returned()
+    public function givenBankHolidayExistsWhenIsBankHolidayInvokedExpectTrue()
     {
         $this->setupCache();
         $newYearsDay = Carbon::create(2020, 01, 01);
@@ -176,7 +176,65 @@ class BankHolidayTest extends TestCase
             [
                 'cache-key'      => 'bank-holiday-test',
                 'cache-duration' => 60,
-                'failed-backup'  => true
+                'failure-backup'  => true
+            ]
+        );
+
+        $result = $sut->isBankHoliday(
+            $newYearsDay,
+            Territory::ENGLAND_AND_WALES
+        );
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @test
+     *
+     * @throws MissingConfigKeyException
+     * @throws TerritoryDoesNotExistException
+     */
+    public function givenBankHolidayDoesntExistsWhenIsBankHolidayInvokedExpectTrue()
+    {
+        $this->setupCache();
+        $newYearsDay = Carbon::create(2020, 01, 10);
+        $sut         = new BankHoliday(
+            $this->client,
+            $this->cache,
+            $this->fileSystem,
+            [
+                'cache-key'      => 'bank-holiday-test',
+                'cache-duration' => 60,
+                'failure-backup'  => true
+            ]
+        );
+
+        $result = $sut->isBankHoliday(
+            $newYearsDay,
+            Territory::ENGLAND_AND_WALES
+        );
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @test
+     *
+     * @throws MissingConfigKeyException
+     * @throws TerritoryDoesNotExistException
+     */
+    public function givenBankHolidayExistsWhenScotlandPassedExpectEntityReturned()
+    {
+        $this->setupCache();
+        $newYearsDay = Carbon::create(2020, 01, 01);
+        $sut         = new BankHoliday(
+            $this->client,
+            $this->cache,
+            $this->fileSystem,
+            [
+                'cache-key'      => 'bank-holiday-test',
+                'cache-duration' => 60,
+                'failure-backup'  => true
             ]
         );
 
@@ -201,7 +259,7 @@ class BankHolidayTest extends TestCase
      * @throws MissingConfigKeyException
      * @throws TerritoryDoesNotExistException
      */
-    public function given_bank_holiday_exists_when_northern_ireland_passed_expect_entity_returned()
+    public function givenBankHolidayExistsWhenNorthernIrelandPassedExpectEntityReturned()
     {
         $this->setupCache();
         $newYearsDay = Carbon::create(2020, 01, 01);
@@ -211,7 +269,7 @@ class BankHolidayTest extends TestCase
             $this->fileSystem,
             ['cache-key'      => 'bank-holiday-test',
              'cache-duration' => 60,
-             'failed-backup'  => true
+             'failure-backup'  => true
             ]
         );
 
@@ -232,8 +290,9 @@ class BankHolidayTest extends TestCase
 
     /**
      * @test
+     * @throws MissingConfigKeyException
      */
-    public function given_territory_passed_which_doesnt_exist_expect_throw()
+    public function givenTerritoryPassedWhichDoesntExistExpectThrow()
     {
         $this->setupCacheWithoutRegion();
         $newYearsDay = Carbon::create(2020, 01, 01);
@@ -243,7 +302,7 @@ class BankHolidayTest extends TestCase
             $this->fileSystem,
             ['cache-key'      => 'bank-holiday-test',
              'cache-duration' => 60,
-             'failed-backup'  => true
+             'failure-backup'  => true
             ]
         );
 
@@ -260,7 +319,7 @@ class BankHolidayTest extends TestCase
      * @expectedException MissingConfigKeyException
      *
      */
-    public function when_config_is_missing_cache_key_expect_throw()
+    public function whenConfigIsMissingCacheKeyExpectThrow()
     {
         $this->expectException(MissingConfigKeyException::class);
         if (method_exists($this, 'expectErrorMessage')) {

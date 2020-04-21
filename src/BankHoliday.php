@@ -204,8 +204,8 @@ class BankHoliday implements IBankHoliday
             throw new MissingConfigKeyException('cache-key');
         }
 
-        if (!array_key_exists('failed-backup', $config)) {
-            throw new MissingConfigKeyException('failed-backup');
+        if (!array_key_exists('failure-backup', $config)) {
+            throw new MissingConfigKeyException('failure-backup');
         }
 
         $this->config = $config;
@@ -269,9 +269,11 @@ class BankHoliday implements IBankHoliday
                         = JsonParse::decode($this->fileSystem->get($this->getBackupFile()));
                 } catch (FileNotFoundException $e) {
                     $this->systemFailure = $e;
+                    return null;
                 }
             } else {
                 $this->systemFailure = $e;
+                return null;
             }
         }
 

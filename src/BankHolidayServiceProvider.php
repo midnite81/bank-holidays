@@ -59,6 +59,7 @@ class BankHolidayServiceProvider extends ServiceProvider
             return new BankHoliday(
                 app()->make(IClient::class),
                 app()->make(ICache::class),
+                app()->make(IFileSystem::class),
                 $this->app['config']['bank-holidays']
             );
         });
