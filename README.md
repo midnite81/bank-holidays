@@ -34,7 +34,7 @@ years between 2015 and 2021.
 ## Versions
 |Version|Description|
 |:-------|:-----------|
-|✅ v2.0|Php 7.1+|
+|v2.0 ✅|Php 7.1+|
 |v1.0|Php 5.5.9+ Depreciated|
 
 View [changelog](changelog.md) for changes. 
