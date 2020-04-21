@@ -103,7 +103,8 @@ public function someFunction()
        'cache-duration' => 60 * 60 * 24,
        'bank-holiday-url' => 'https://www.gov.uk/bank-holidays.json',
        'cache-key' => 'midnite81-bank-holidays',
-       'cache-class' => YourCacheClass::class, // you will need to create a cache class 
+       'cache-class' => YourCacheClass::class, // you will need to create a cache class
+       'filesystem-class' => \Midnite81\BankHolidays\Drivers\PhpFileSystem::class,
        'http-client' => null,
        'failure-backup' => true,
        'request-factory' => null
