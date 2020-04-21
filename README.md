@@ -31,6 +31,14 @@ php artisan vendor:publish provider="Midnite81\BankHolidays\BankHolidayServicePr
 The UK Government provides the bank holiday json feed, this at the time of writing only includes the 
 years between 2015 and 2021. 
 
+## Versions
+|Version|Description|
+|:-------|:-----------|
+|✅ v2.0|Php 7.1+|
+|v1.0|Php 5.5.9+ Depreciated|
+
+View [changelog](changelog.md) for changes. 
+
 ## Http standards
 
 To adhere to better standards, this package uses the popular and powerful PHP-HTTP library to make HTTP requests. 
