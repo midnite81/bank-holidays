@@ -55,22 +55,25 @@ use Midnite81\BankHolidays\Contracts\IBankHoliday;
 
 public function myFunction(IBankHoliday $bankHoliday)
 { 
-    $bankHoliday = $bankHoliday->bankHolidayDetail(
+    $bankHolidayEntity = $bankHoliday->bankHolidayDetail(
         \Carbon\Carbon::create(2020, 01, 01), 
         \Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES
     );
 
     // if the date provided is a bank holiday a BankHolidayEntity is returned
-    // otherwise it returns null.
+    // otherwise it returns null. If the entity is returned you can access the entity properties below.
+
+```
+[See entity properties](#bank-holiday-entity)
+
+```php
    
-    if ($bankHoliday == null) {
-        // the date provided is not a bank holiday
+    if ($bankHoliday->isBankHoliday(
+        \Carbon\Carbon::create(2020, 01, 01),
+        \Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES
+        )) {
+        // if it is a bank holiday do this ...
     }
-    
-    if ($bankHoliday != null) { 
-        echo $bankHoliday->title; // returns "New Year's Day"
-        echo $bankHoliday->date; // returns Carbon date object    
-    } 
 }
 ```
 
