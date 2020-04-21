@@ -6,7 +6,6 @@ use Midnite81\BankHolidays\Drivers\LaravelCacheDriver;
 use Midnite81\BankHolidays\Tests\Integration\LaravelTestCase;
 use Illuminate\Cache\Repository;
 use Mockery;
-use Mockery\Mock;
 
 class LaravelCacheDriverTest extends LaravelTestCase
 {
@@ -41,8 +40,10 @@ class LaravelCacheDriverTest extends LaravelTestCase
         $this->mockedApplication
             = Mockery::mock('Illuminate\Foundation\Application');
         $this->laravelCache = app('cache.store');
-        $this->sut = new LaravelCacheDriver($this->laravelCache,
-            $this->mockedApplication);
+        $this->sut = new LaravelCacheDriver(
+            $this->laravelCache,
+            $this->mockedApplication
+        );
         $this->testKey = 'test-key';
         $this->testValue = 'B37CU55';
     }
@@ -50,7 +51,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
     /**
      * @test
      */
-    public function given_key_exists_expect_true()
+    public function givenKeyExistsExpectTrue()
     {
         $this->laravelCache->put('test-key', '1', 60);
 
@@ -64,7 +65,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
     /**
      * @test
      */
-    public function given_key_does_not_exists_expect_false()
+    public function givenKeyDoesNotExistsExpectFalse()
     {
         $result = $this->sut->has('test-key');
 
@@ -75,7 +76,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
      * @test
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function given_key_is_set_expect_stored()
+    public function givenKeyIsSetExpectStored()
     {
         $this->laravelCache->put($this->testKey, $this->testValue, 60);
 
@@ -89,7 +90,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
     /**
      * @test
      */
-    public function given_key_exists_when_deleted_expect_deleted()
+    public function givenKeyExistsWhenDeletedExpectDeleted()
     {
         $this->laravelCache->put($this->testKey, $this->testValue, 60);
 
@@ -101,7 +102,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
     /**
      * @test
      */
-    public function given_laravel_version_before_58_expect_seconds_to_minutes_conversion()
+    public function givenLaravelVersionBefore58ExpectSecondsToMinutesConversion()
     {
         $this->mockedApplication->shouldReceive('version')->andReturn('5.7.5')->once();
         $mockedRepository = Mockery::mock(\Illuminate\Cache\Repository::class)
@@ -120,7 +121,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
     /**
      * @test
      */
-    public function given_laravel_version_after_or_equal_to_58_expect_seconds_to_minutes_conversion()
+    public function givenLaravelVersionAfterOrEqualTo58ExpectSecondsToMinutesConversion()
     {
         $this->mockedApplication->shouldReceive('version')->andReturn('5.8.6');
         $mockedRepository = Mockery::mock(\Illuminate\Cache\Repository::class)

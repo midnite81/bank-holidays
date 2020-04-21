@@ -1,7 +1,7 @@
 # UK Bank Holidays [![Latest Stable Version](https://poser.pugx.org/midnite81/bank-holidays/version)](https://packagist.org/packages/midnite81/bank-holidays) [![Total Downloads](https://poser.pugx.org/midnite81/bank-holidays/downloads)](https://packagist.org/packages/midnite81/bank-holidays) [![Latest Unstable Version](https://poser.pugx.org/midnite81/bank-holidays/v/unstable)](https://packagist.org/packages/midnite81/bank-holidays) [![License](https://poser.pugx.org/midnite81/bank-holidays/license.svg)](https://packagist.org/packages/midnite81/bank-holidays) [![Build](https://travis-ci.org/midnite81/bank-holidays.svg?branch=master)](https://travis-ci.org/midnite81/bank-holidays) [![Coverage Status](https://coveralls.io/repos/github/midnite81/bank-holidays/badge.svg?branch=master)](https://coveralls.io/github/midnite81/bank-holidays?branch=master)
 
-This package integrates with the UK Government's Bank Holiday Json response. This package has been principally been
-designed for use with laravel, but is framework agnostic under the hood. 
+This package integrates with the UK Government's Bank Holiday Json response. It has been principally been
+designed for use with laravel, but is framework agnostic under the hood. **This package requires PHP 7.1 or greater.**
 
 ## Installation
 
@@ -31,6 +31,14 @@ php artisan vendor:publish provider="Midnite81\BankHolidays\BankHolidayServicePr
 The UK Government provides the bank holiday json feed, this at the time of writing only includes the 
 years between 2015 and 2021. 
 
+## Versions
+|Version|Description|
+|:-------|:-----------|
+|v2.0 ✅|Php 7.1+|
+|v1.0|Php 5.5.9+ Depreciated|
+
+View [changelog](CHANGELOG.md) for changes. 
+
 ## Http standards
 
 To adhere to better standards, this package uses the popular and powerful PHP-HTTP library to make HTTP requests. 
@@ -47,22 +55,25 @@ use Midnite81\BankHolidays\Contracts\IBankHoliday;
 
 public function myFunction(IBankHoliday $bankHoliday)
 { 
-    $bankHoliday = $bankHoliday->isBankHoliday(
+    $bankHolidayEntity = $bankHoliday->bankHolidayDetail(
         \Carbon\Carbon::create(2020, 01, 01), 
         \Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES
     );
 
     // if the date provided is a bank holiday a BankHolidayEntity is returned
-    // otherwise it returns null.
+    // otherwise it returns null. If the entity is returned you can access the entity properties below.
+
+```
+[See entity properties](#bank-holiday-entity)
+
+```php
    
-    if ($bankHoliday == null) {
-        // the date provided is not a bank holiday
+    if ($bankHoliday->isBankHoliday(
+        \Carbon\Carbon::create(2020, 01, 01),
+        \Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES
+        )) {
+        // if it is a bank holiday do this ...
     }
-    
-    if ($bankHoliday != null) { 
-        echo $bankHoliday->title; // returns "New Year's Day"
-        echo $bankHoliday->date; // returns Carbon date object    
-    } 
 }
 ```
 
@@ -104,7 +115,7 @@ public function someFunction()
     // Once you have $bankHoliday instantiated you can use the following methods
 
     $bankHoliday->getAll(int $territory);
-    $bankHoliday->isBankHoliday(Carbon $date, int $territory);
+    $bankHoliday->bankHolidayDetail(Carbon $date, int $territory);
 
     // for territory please use the constants in `Midnite81\BankHolidays\Enums\Territory`
 }
@@ -126,8 +137,8 @@ The bank holiday entity has the following properties.
 The following territories are available
 
 ```php
-Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES // England and Wales   
-Midnite81\BankHolidays\Enums\Territory::SCOTLAND // Scotland   
-Midnite81\BankHolidays\Enums\Territory::NORTHERN_IRELAND // Northern Ireland   
-Midnite81\BankHolidays\Enums\Territory::ALL // All territories (e.g. England, Wales, Scotland and Northern Ireland)
+Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES; // England and Wales   
+Midnite81\BankHolidays\Enums\Territory::SCOTLAND; // Scotland   
+Midnite81\BankHolidays\Enums\Territory::NORTHERN_IRELAND; // Northern Ireland   
+Midnite81\BankHolidays\Enums\Territory::ALL; // All territories (e.g. England, Wales, Scotland and Northern Ireland)
 ```

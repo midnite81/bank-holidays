@@ -6,6 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 use Midnite81\BankHolidays\Contracts\Drivers\ICache;
 use Illuminate\Cache\Repository;
+use phpDocumentor\Reflection\Types\Mixed_;
 use Psr\SimpleCache\InvalidArgumentException;
 
 class LaravelCacheDriver implements ICache
@@ -34,7 +35,7 @@ class LaravelCacheDriver implements ICache
     /**
      * @inheritDoc
      */
-    public function has($key)
+    public function has($key): bool
     {
         return $this->cache->has($key);
     }
@@ -42,7 +43,7 @@ class LaravelCacheDriver implements ICache
     /**
      * @inheritDoc
      */
-    public function put($key, $value, $duration)
+    public function put($key, $value, $duration): bool
     {
         if (version_compare($this->app->version(), '5.8.0', '<')) {
             $duration = floor($duration * 60);
@@ -63,7 +64,7 @@ class LaravelCacheDriver implements ICache
      * @inheritDoc
      * @throws InvalidArgumentException
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         return $this->cache->delete($key);
     }

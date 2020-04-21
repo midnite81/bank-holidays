@@ -13,5 +13,5 @@ interface IClient
      *
      * @throws RequestFailedException
      */
-    public function getData();
+    public function getData(): \stdClass;
 }

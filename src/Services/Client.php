@@ -54,7 +54,7 @@ class Client implements IClient
      *
      * @throws RequestFailedException
      */
-    public function getData()
+    public function getData(): \stdClass
     {
         $request = $this->requestFactory->createRequest('GET', $this->config['bank-holiday-url']);
 
@@ -80,7 +80,7 @@ class Client implements IClient
      *
      * @throws MissingConfigKeyException
      */
-    private function processConfig(array $config)
+    private function processConfig(array $config): void
     {
         if (!array_key_exists('bank-holiday-url', $config)) {
             throw new MissingConfigKeyException('bank-holiday-url');

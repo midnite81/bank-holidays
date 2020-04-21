@@ -30,7 +30,7 @@ class ClientTest extends LaravelTestCase
      *
      * @throws MissingConfigKeyException
      */
-    public function given_config_not_passed_expect_exception_thrown()
+    public function givenConfigNotPassedExpectExceptionThrown()
     {
         $this->expectException(MissingConfigKeyException::class);
         if (method_exists($this, 'expectErrorMessage')) {
@@ -44,7 +44,7 @@ class ClientTest extends LaravelTestCase
      * @test
      * @throws MissingConfigKeyException
      */
-    public function given_response_fails_expect_exception_thrown()
+    public function givenResponseFailsExpectExceptionThrown()
     {
         /**
          * @var HttpClient $httpClient;
