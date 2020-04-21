@@ -1,4 +1,4 @@
-# UK Bank Holidays [![Latest Stable Version](https://poser.pugx.org/midnite81/bank-holidays/version)](https://packagist.org/packages/midnite81/bank-holiday) [![Total Downloads](https://poser.pugx.org/midnite81/bank-holidays/downloads)](https://packagist.org/packages/midnite81/bank-holiday) [![Latest Unstable Version](https://poser.pugx.org/midnite81/bank-holidays/v/unstable)](https://packagist.org/packages/midnite81/bank-holiday) [![License](https://poser.pugx.org/midnite81/bank-holidays/license.svg)](https://packagist.org/packages/midnite81/bank-holiday) [![Build](https://travis-ci.org/midnite81/bank-holidays.svg?branch=master)](https://travis-ci.org/midnite81/bank-holidays) [![Coverage Status](https://coveralls.io/repos/github/midnite81/bank-holidays/badge.svg?branch=master)](https://coveralls.io/github/midnite81/bank-holidays?branch=master)
+# UK Bank Holidays [![Latest Stable Version](https://poser.pugx.org/midnite81/bank-holidays/version)](https://packagist.org/packages/midnite81/bank-holidays) [![Total Downloads](https://poser.pugx.org/midnite81/bank-holidays/downloads)](https://packagist.org/packages/midnite81/bank-holidays) [![Latest Unstable Version](https://poser.pugx.org/midnite81/bank-holidays/v/unstable)](https://packagist.org/packages/midnite81/bank-holidays) [![License](https://poser.pugx.org/midnite81/bank-holidays/license.svg)](https://packagist.org/packages/midnite81/bank-holidays) [![Build](https://travis-ci.org/midnite81/bank-holidays.svg?branch=master)](https://travis-ci.org/midnite81/bank-holidays) [![Coverage Status](https://coveralls.io/repos/github/midnite81/bank-holidays/badge.svg?branch=master)](https://coveralls.io/github/midnite81/bank-holidays?branch=master)
 
 This package integrates with the UK Government's Bank Holiday Json response. This package has been principally been
 designed for use with laravel, but is framework agnostic under the hood. 
@@ -126,8 +126,8 @@ The bank holiday entity has the following properties.
 The following territories are available
 
 ```php
-Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES // England and Wales   
-Midnite81\BankHolidays\Enums\Territory::SCOTLAND // Scotland   
-Midnite81\BankHolidays\Enums\Territory::NORTHERN_IRELAND // Northern Ireland   
-Midnite81\BankHolidays\Enums\Territory::ALL // All territories (e.g. England, Wales, Scotland and Northern Ireland)
+Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES; // England and Wales   
+Midnite81\BankHolidays\Enums\Territory::SCOTLAND; // Scotland   
+Midnite81\BankHolidays\Enums\Territory::NORTHERN_IRELAND; // Northern Ireland   
+Midnite81\BankHolidays\Enums\Territory::ALL; // All territories (e.g. England, Wales, Scotland and Northern Ireland)
 ```
