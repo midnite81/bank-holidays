@@ -14,5 +14,5 @@ interface IFileSystem
      * @return string
      * @throws FileNotFoundException
      */
-    public function get($fileName);
+    public function get($fileName): string;
 }

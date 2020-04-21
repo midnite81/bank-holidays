@@ -15,7 +15,7 @@ class PhpFileSystem implements IFileSystem
      * @return string
      * @throws FileNotFoundException
      */
-    public function get($fileName)
+    public function get($fileName): string
     {
         $contents = @file_get_contents($fileName);
 

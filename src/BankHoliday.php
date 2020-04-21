@@ -16,6 +16,8 @@ use Midnite81\BankHolidays\Exceptions\MissingConfigKeyException;
 use Midnite81\BankHolidays\Exceptions\RequestFailedException;
 use Midnite81\BankHolidays\Exceptions\TerritoryDoesNotExistException;
 use Midnite81\JsonParser\JsonParse;
+use phpDocumentor\Reflection\Types\Object_;
+use test\Mockery\MagicParams;
 
 class BankHoliday implements IBankHoliday
 {
@@ -82,7 +84,7 @@ class BankHoliday implements IBankHoliday
     public function isBankHoliday(
         Carbon $date,
         $territory = Territory::ENGLAND_AND_WALES
-    ) {
+    ): bool {
         $this->checkForExceptions();
 
         return $this->bankHolidayDetail($date, $territory) != null;
@@ -99,7 +101,7 @@ class BankHoliday implements IBankHoliday
     public function bankHolidayDetail(
         Carbon $date,
         $territory = Territory::ENGLAND_AND_WALES
-    ) {
+    ): ?BankHolidayEntity {
         $this->checkForExceptions();
 
         $england_and_wales = $this->getBankHolidayEntity(
@@ -148,7 +150,7 @@ class BankHoliday implements IBankHoliday
      * @throws TerritoryDoesNotExistException
      * @throws Exception
      */
-    public function getAll($territory = Territory::ENGLAND_AND_WALES)
+    public function getAll(int $territory = Territory::ENGLAND_AND_WALES): array
     {
         $this->checkForExceptions();
 
@@ -198,7 +200,7 @@ class BankHoliday implements IBankHoliday
      *
      * @throws MissingConfigKeyException
      */
-    protected function processConfig(array $config)
+    protected function processConfig(array $config): void
     {
         if (!array_key_exists('cache-key', $config)) {
             throw new MissingConfigKeyException('cache-key');
@@ -227,7 +229,7 @@ class BankHoliday implements IBankHoliday
         $searchTerritory,
         $territoryName,
         $territoryKey
-    ) {
+    ): ?BankHolidayEntity {
         $carbonKey = $date->format('Y-m-d');
 
         if (in_array(
@@ -254,7 +256,7 @@ class BankHoliday implements IBankHoliday
     /**
      * @return mixed
      */
-    protected function hasOrGetData()
+    protected function hasOrGetData(): ?\stdClass
     {
         if ($this->cache->has($this->config['cache-key'])) {
             return $this->cache->get($this->config['cache-key']);
@@ -289,10 +291,10 @@ class BankHoliday implements IBankHoliday
     /**
      * @param $territory
      *
-     * @return mixed
+     * @return array
      * @throws TerritoryDoesNotExistException
      */
-    protected function regionalData($territory)
+    protected function regionalData($territory): array
     {
         if (!property_exists($this->data, $territory)) {
             throw new TerritoryDoesNotExistException($territory);
@@ -305,10 +307,10 @@ class BankHoliday implements IBankHoliday
      * @param $key
      * @param $name
      *
-     * @return mixed
+     * @return array
      * @throws TerritoryDoesNotExistException
      */
-    protected function getRegionalData($key, $name)
+    protected function getRegionalData($key, $name): array
     {
         $data = $this->regionalData($key);
 
@@ -325,7 +327,10 @@ class BankHoliday implements IBankHoliday
         return $data;
     }
 
-    protected function getBackupFile()
+    /**
+     * @return string
+     */
+    protected function getBackupFile(): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . '../backup/bank-holiday.json';
     }
@@ -333,7 +338,7 @@ class BankHoliday implements IBankHoliday
     /**
      * @throws Exception
      */
-    protected function checkForExceptions()
+    protected function checkForExceptions(): void
     {
         if ($this->systemFailure) {
             throw $this->systemFailure;

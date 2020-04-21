@@ -29,7 +29,7 @@ interface IBankHoliday
      * @throws TerritoryDoesNotExistException
      * @throws Exception
      */
-    public function getAll($territory = Territory::ENGLAND_AND_WALES);
+    public function getAll(int $territory = Territory::ENGLAND_AND_WALES);
 
     /**
      * @param Carbon $date

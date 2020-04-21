@@ -2,6 +2,8 @@
 
 namespace Midnite81\BankHolidays\Contracts\Drivers;
 
+use phpDocumentor\Reflection\Types\Mixed_;
+
 interface ICache
 {
     /**
@@ -11,7 +13,7 @@ interface ICache
      *
      * @return bool
      */
-    public function has($key);
+    public function has($key): bool;
 
     /**
      * Adds a key/value to the cache for a specified duration
@@ -22,7 +24,7 @@ interface ICache
      *
      * @return bool
      */
-    public function put($key, $value, $duration);
+    public function put($key, $value, $duration): bool;
 
     /**
      * Gets the value of the specified key from the cache
@@ -40,5 +42,5 @@ interface ICache
      *
      * @return bool
      */
-    public function delete($key);
+    public function delete($key): bool;
 }
