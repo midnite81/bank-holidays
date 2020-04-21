@@ -105,6 +105,7 @@ public function someFunction()
        'cache-key' => 'midnite81-bank-holidays',
        'cache-class' => YourCacheClass::class, // you will need to create a cache class 
        'http-client' => null,
+       'failure-backup' => true,
        'request-factory' => null
     ];
 
