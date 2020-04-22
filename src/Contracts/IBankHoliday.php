@@ -40,4 +40,24 @@ interface IBankHoliday
      * @throws Exception
      */
     public function isBankHoliday(Carbon $date, $territory = Territory::ENGLAND_AND_WALES);
+
+    /**
+     * Returns the earliest date in the data
+     *
+     * @param int $territory
+     *
+     * @return Carbon
+     * @throws TerritoryDoesNotExistException
+     */
+    public function getMinDate(int $territory = Territory::ALL): Carbon;
+
+    /**
+     * Returns the earliest date in the data
+     *
+     * @param int $territory
+     *
+     * @return Carbon
+     * @throws TerritoryDoesNotExistException
+     */
+    public function getMaxDate(int $territory = Territory::ALL): Carbon;
 }
