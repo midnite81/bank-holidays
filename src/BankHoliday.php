@@ -16,8 +16,6 @@ use Midnite81\BankHolidays\Exceptions\MissingConfigKeyException;
 use Midnite81\BankHolidays\Exceptions\RequestFailedException;
 use Midnite81\BankHolidays\Exceptions\TerritoryDoesNotExistException;
 use Midnite81\JsonParser\JsonParse;
-use phpDocumentor\Reflection\Types\Object_;
-use test\Mockery\MagicParams;
 
 class BankHoliday implements IBankHoliday
 {
@@ -104,7 +102,7 @@ class BankHoliday implements IBankHoliday
     ): ?BankHolidayEntity {
         $this->checkForExceptions();
 
-        $england_and_wales = $this->getBankHolidayEntity(
+        $englandAndWales = $this->getBankHolidayEntity(
             $date,
             $territory,
             Territory::ENGLAND_AND_WALES,
@@ -112,8 +110,8 @@ class BankHoliday implements IBankHoliday
             TerritoryName::ENGLAND_AND_WALES_KEY
         );
 
-        if ($england_and_wales != null) {
-            return $england_and_wales;
+        if ($englandAndWales != null) {
+            return $englandAndWales;
         }
 
         $scotland = $this->getBankHolidayEntity(
