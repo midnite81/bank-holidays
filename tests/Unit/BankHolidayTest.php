@@ -113,7 +113,7 @@ class BankHolidayTest extends TestCase
             [
                 'cache-key'      => 'bank-holiday-test',
                 'cache-duration' => 60,
-                'failure-backup'  => true
+                'failure-backup' => true
             ]
         );
 
@@ -140,7 +140,7 @@ class BankHolidayTest extends TestCase
             [
                 'cache-key'      => 'bank-holiday-test',
                 'cache-duration' => 60,
-                'failure-backup'  => true
+                'failure-backup' => true
             ]
         );
 
@@ -176,7 +176,7 @@ class BankHolidayTest extends TestCase
             [
                 'cache-key'      => 'bank-holiday-test',
                 'cache-duration' => 60,
-                'failure-backup'  => true
+                'failure-backup' => true
             ]
         );
 
@@ -205,7 +205,7 @@ class BankHolidayTest extends TestCase
             [
                 'cache-key'      => 'bank-holiday-test',
                 'cache-duration' => 60,
-                'failure-backup'  => true
+                'failure-backup' => true
             ]
         );
 
@@ -234,7 +234,7 @@ class BankHolidayTest extends TestCase
             [
                 'cache-key'      => 'bank-holiday-test',
                 'cache-duration' => 60,
-                'failure-backup'  => true
+                'failure-backup' => true
             ]
         );
 
@@ -267,9 +267,10 @@ class BankHolidayTest extends TestCase
             $this->client,
             $this->cache,
             $this->fileSystem,
-            ['cache-key'      => 'bank-holiday-test',
-             'cache-duration' => 60,
-             'failure-backup'  => true
+            [
+                'cache-key'      => 'bank-holiday-test',
+                'cache-duration' => 60,
+                'failure-backup' => true
             ]
         );
 
@@ -300,9 +301,10 @@ class BankHolidayTest extends TestCase
             $this->client,
             $this->cache,
             $this->fileSystem,
-            ['cache-key'      => 'bank-holiday-test',
-             'cache-duration' => 60,
-             'failure-backup'  => true
+            [
+                'cache-key'      => 'bank-holiday-test',
+                'cache-duration' => 60,
+                'failure-backup' => true
             ]
         );
 
@@ -311,6 +313,66 @@ class BankHolidayTest extends TestCase
         $result = $sut->bankHolidayDetail(
             $newYearsDay,
             Territory::NORTHERN_IRELAND
+        );
+    }
+
+    /**
+     * @test
+     *
+     * @throws MissingConfigKeyException
+     * @throws TerritoryDoesNotExistException
+     */
+    public function givenGetMinDateInvokedExpectDateReturned()
+    {
+        $this->setupCache();
+        $sut = new BankHoliday(
+            $this->client,
+            $this->cache,
+            $this->fileSystem,
+            [
+                'cache-key'      => 'bank-holiday-test',
+                'cache-duration' => 60,
+                'failure-backup' => true
+            ]
+        );
+
+        $result = $sut->getMinDate(
+            Territory::ENGLAND_AND_WALES
+        );
+
+        $this->assertEquals(
+            Carbon::create(2015, 01, 01, 0, 0, 0),
+            $result
+        );
+    }
+
+    /**
+     * @test
+     *
+     * @throws MissingConfigKeyException
+     * @throws TerritoryDoesNotExistException
+     */
+    public function givenGetMaxDateInvokedExpectDateReturned()
+    {
+        $this->setupCache();
+        $sut = new BankHoliday(
+            $this->client,
+            $this->cache,
+            $this->fileSystem,
+            [
+                'cache-key'      => 'bank-holiday-test',
+                'cache-duration' => 60,
+                'failure-backup' => true
+            ]
+        );
+
+        $result = $sut->getMaxDate(
+            Territory::ENGLAND_AND_WALES
+        );
+
+        $this->assertEquals(
+            Carbon::create(2021, 12, 28, 0, 0, 0),
+            $result
         );
     }
 
@@ -325,7 +387,8 @@ class BankHolidayTest extends TestCase
         if (method_exists($this, 'expectErrorMessage')) {
             $this->expectErrorMessage("The configuration key 'cache-key' is missing");
         }
-        $sut = new BankHoliday($this->client, $this->cache, $this->fileSystem, []);
+        $sut = new BankHoliday($this->client, $this->cache, $this->fileSystem,
+            []);
     }
 
     protected function tearDown(): void

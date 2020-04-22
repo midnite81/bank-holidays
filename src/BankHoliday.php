@@ -194,6 +194,38 @@ class BankHoliday implements IBankHoliday
     }
 
     /**
+     * Returns the earliest date in the data
+     *
+     * @param int $territory
+     *
+     * @return Carbon
+     * @throws TerritoryDoesNotExistException
+     */
+    public function getMinDate(int $territory = Territory::ALL): Carbon
+    {
+        $data = $this->getAll($territory);
+        $dates = array_column($data, 'date');
+
+        return min($dates);
+    }
+
+    /**
+     * Returns the earliest date in the data
+     *
+     * @param int $territory
+     *
+     * @return Carbon
+     * @throws TerritoryDoesNotExistException
+     */
+    public function getMaxDate(int $territory = Territory::ALL): Carbon
+    {
+        $data = $this->getAll($territory);
+        $dates = array_column($data, 'date');
+
+        return max($dates);
+    }
+
+    /**
      * @param array $config
      *
      * @throws MissingConfigKeyException
@@ -315,7 +347,7 @@ class BankHoliday implements IBankHoliday
         foreach ($data as $key => $item) {
             $data[$key] = new BankHolidayEntity(
                 $item->title,
-                Carbon::createFromFormat('Y-m-d', $item->date),
+                Carbon::createFromFormat('Y-m-d', $item->date)->startOfDay(),
                 $item->notes,
                 $item->bunting,
                 $name

@@ -93,6 +93,23 @@ public function myFunction(IBankHoliday $bankHoliday)
 }
 ```
 
+**Check data range**
+
+The UK government supplies the data which is used in this package and is subject to date range limitations.
+Due to these limitations, this package provides two methods for you to ascertain the minimum and maximum 
+dates in the data are available for you to check against.
+
+```php
+
+use Midnite81\BankHolidays\Contracts\IBankHoliday;
+
+public function myFunction(IBankHoliday $bankHoliday)
+{ 
+    $minimumDate = $bankHoliday->getMinDate(\Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES);
+    $maximumDate = $bankHoliday->getMaxDate(\Midnite81\BankHolidays\Enums\Territory::ENGLAND_AND_WALES);
+}
+```
+
 ## Usage without laravel
 
 ```php
