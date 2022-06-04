@@ -6,7 +6,7 @@
         "php": ">=7.1",
         "nesbot/carbon": "^1.0|^2.0",
         "php-http/curl-client": "^1.0|^2.1",
-        "guzzlehttp/psr7": "^1.6",
+        "guzzlehttp/psr7": "^1.6|^2.0",
         "php-http/message": "^1.0",
         "http-interop/http-factory-guzzle": "^1.0",
         "midnite81/json-parser": "^1.0"
