@@ -60,10 +60,7 @@ class BankHolidayExceptionTest extends TestCase
      * Client Exceptions
      */
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException|TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function given_the_client_throws_exception_when_backup_not_used_expect_throw_during_getAll_call()
     {
         $sut = $this->setupClientFailure();
@@ -72,11 +69,7 @@ class BankHolidayExceptionTest extends TestCase
         $sut->getAll();
     }
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function given_the_client_throws_exception_when_backup_not_used_expect_throw_during_isBankHoliday_call()
     {
         $sut = $this->setupClientFailure();
@@ -85,11 +78,7 @@ class BankHolidayExceptionTest extends TestCase
         $sut->isBankHoliday(Carbon::now());
     }
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function given_the_client_throws_exception_when_backup_not_used_expect_throw_during_getBankHolidayDetail_call()
     {
         $sut = $this->setupClientFailure();
@@ -102,10 +91,7 @@ class BankHolidayExceptionTest extends TestCase
      * Filesystem Exceptions
      */
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException|TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function given_the_filesystem_throws_exception_when_backup_not_used_expect_throw_during_getAll_call()
     {
         $sut = $this->setUpFileSystemFailure();
@@ -114,11 +100,7 @@ class BankHolidayExceptionTest extends TestCase
         $sut->getAll();
     }
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function given_the_filesystem_throws_exception_when_backup_not_used_expect_throw_during_isBankHoliday_call()
     {
         $sut = $this->setUpFileSystemFailure();
@@ -127,11 +109,7 @@ class BankHolidayExceptionTest extends TestCase
         $sut->isBankHoliday(Carbon::now());
     }
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function given_the_filesystem_throws_exception_when_backup_not_used_expect_throw_during_getBankHolidayDetail_call()
     {
         $sut = $this->setUpFileSystemFailure();

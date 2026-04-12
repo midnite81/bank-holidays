@@ -24,12 +24,7 @@ class ClientTest extends LaravelTestCase
         $this->httpClient = Mockery::mock(\Http\Client\Curl\Client::class);
     }
 
-    /**
-     * @/**
-     * @test
-     *
-     * @throws MissingConfigKeyException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenConfigNotPassedExpectExceptionThrown()
     {
         $this->expectException(MissingConfigKeyException::class);
@@ -40,10 +35,7 @@ class ClientTest extends LaravelTestCase
         $sut = new Client(null, null, []);
     }
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenResponseFailsExpectExceptionThrown()
     {
         /**

@@ -12,13 +12,13 @@
         "midnite81/json-parser": "^1.0"
     },
     "require-dev": {
-        "laravel/framework": "^10.0|^11.0|^12.0",
-        "illuminate/support": "^10.0|^11.0|^12.0",
-        "phpunit/phpunit": "^10.0|^11.0",
+        "laravel/framework": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
+        "phpunit/phpunit": "^10.0|^11.0|^12.0",
         "mockery/mockery": "^1.1",
         "symfony/finder": "^6.0|^7.0",
         "php-coveralls/php-coveralls": "^2.7",
-        "orchestra/testbench": "^8.0|^9.0|^10.0"
+        "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0"
     },
     "license": "MIT",
     "authors": [
@@ -44,7 +44,8 @@
         "frameworks": [
             "Laravel 10",
             "Laravel 11",
-            "Laravel 12"
+            "Laravel 12",
+            "Laravel 13"
         ],
         "laravel": {
             "providers": [

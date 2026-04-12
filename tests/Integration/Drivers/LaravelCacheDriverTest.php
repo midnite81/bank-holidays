@@ -48,9 +48,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
         $this->testValue = 'B37CU55';
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenKeyExistsExpectTrue()
     {
         $this->laravelCache->put('test-key', '1', 60);
@@ -62,9 +60,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
         $this->laravelCache->delete('test-key');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenKeyDoesNotExistsExpectFalse()
     {
         $result = $this->sut->has('test-key');
@@ -72,10 +68,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
         $this->assertFalse($result);
     }
 
-    /**
-     * @test
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenKeyIsSetExpectStored()
     {
         $this->laravelCache->put($this->testKey, $this->testValue, 60);
@@ -87,9 +80,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
         $this->laravelCache->delete($this->testKey);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenKeyExistsWhenDeletedExpectDeleted()
     {
         $this->laravelCache->put($this->testKey, $this->testValue, 60);
@@ -99,9 +90,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
         $this->assertFalse($this->laravelCache->has($this->testKey));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenLaravelVersionBefore58ExpectSecondsToMinutesConversion()
     {
         $this->mockedApplication->shouldReceive('version')->andReturn('5.7.5')->once();
@@ -118,9 +107,7 @@ class LaravelCacheDriverTest extends LaravelTestCase
         $sut->put($this->testKey, $this->testValue, 60);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenLaravelVersionAfterOrEqualTo58ExpectSecondsToMinutesConversion()
     {
         $this->mockedApplication->shouldReceive('version')->andReturn('5.8.6');

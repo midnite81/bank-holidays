@@ -61,11 +61,7 @@ class BankHolidayTest extends TestCase
             . '/../test_data/bank_holiday_data_without_ni.json');
     }
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenDataInTheCacheExpectClientNotCalledAndDataReturned()
     {
         $this->setupCache();
@@ -84,11 +80,7 @@ class BankHolidayTest extends TestCase
         $this->assertTrue($response[0] instanceof BankHolidayEntity);
     }
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenDataNotInTheCacheExpectClientCalledAndDataReturned()
     {
         $json        = $this->testJson;
@@ -123,12 +115,7 @@ class BankHolidayTest extends TestCase
         $this->assertTrue($response[0] instanceof BankHolidayEntity);
     }
 
-    /**
-     * @test
-     *
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenBankHolidayExistsWhenEnglandAndWalesPassedExpectEntityReturned()
     {
         $this->setupCache();
@@ -159,12 +146,7 @@ class BankHolidayTest extends TestCase
         $this->assertEquals('', $result->notes);
     }
 
-    /**
-     * @test
-     *
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenBankHolidayExistsWhenIsBankHolidayInvokedExpectTrue()
     {
         $this->setupCache();
@@ -188,12 +170,7 @@ class BankHolidayTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /**
-     * @test
-     *
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenBankHolidayDoesntExistsWhenIsBankHolidayInvokedExpectTrue()
     {
         $this->setupCache();
@@ -217,12 +194,7 @@ class BankHolidayTest extends TestCase
         $this->assertFalse($result);
     }
 
-    /**
-     * @test
-     *
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenBankHolidayExistsWhenScotlandPassedExpectEntityReturned()
     {
         $this->setupCache();
@@ -253,12 +225,7 @@ class BankHolidayTest extends TestCase
         $this->assertEquals('', $result->notes);
     }
 
-    /**
-     * @test
-     *
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenBankHolidayExistsWhenNorthernIrelandPassedExpectEntityReturned()
     {
         $this->setupCache();
@@ -289,10 +256,7 @@ class BankHolidayTest extends TestCase
         $this->assertEquals('', $result->notes);
     }
 
-    /**
-     * @test
-     * @throws MissingConfigKeyException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenTerritoryPassedWhichDoesntExistExpectThrow()
     {
         $this->setupCacheWithoutRegion();
@@ -316,12 +280,7 @@ class BankHolidayTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenGetMinDateInvokedExpectDateReturned()
     {
         $this->setupCache();
@@ -346,12 +305,7 @@ class BankHolidayTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @throws MissingConfigKeyException
-     * @throws TerritoryDoesNotExistException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenGetMaxDateInvokedExpectDateReturned()
     {
         $this->setupCache();
@@ -376,11 +330,7 @@ class BankHolidayTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @expectedException MissingConfigKeyException
-     *
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function whenConfigIsMissingCacheKeyExpectThrow()
     {
         $this->expectException(MissingConfigKeyException::class);

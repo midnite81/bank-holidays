@@ -10,12 +10,7 @@ use Midnite81\BankHolidays\Tests\Integration\LaravelTestCase;
 
 class ClientTest extends LaravelTestCase
 {
-    /**
-     * @/**
-     * @test
-     * @throws MissingConfigKeyException
-     * @throws RequestFailedException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenDataRequestedExpectResponse()
     {
         $client = new Client(
@@ -30,9 +25,7 @@ class ClientTest extends LaravelTestCase
         $this->assertTrue(property_exists($data, 'england-and-wales'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenLaravelInstantiationExpectResponse()
     {
         $client = $this->app->make(IClient::class);

@@ -19,9 +19,7 @@ class PhpFileSystemTest extends TestCase
         $this->sut = new PhpFileSystem();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenGetInvokedExpectFileContentsRetrieved()
     {
         $path = join(DIRECTORY_SEPARATOR, ['..', '..', '..', 'backup', 'bank-holiday.json']);
@@ -31,10 +29,7 @@ class PhpFileSystemTest extends TestCase
         $this->assertStringContainsString('{"england-and-wales":{"division":"england-and-wales",', $result);
     }
 
-    /**
-     * @test
-     * @expectedException \Midnite81\BankHolidays\Exceptions\FileNotFoundException
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenGetInvokedWhenFileNotAvailableExpectThrow()
     {
         $this->expectException(FileNotFoundException::class);

@@ -13,9 +13,7 @@ use Midnite81\BankHolidays\Services\Client;
 
 class BankHolidayServiceProviderTest extends LaravelTestCase
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenIClientIsRegisteredExpectConcreteClass()
     {
         $actual = $this->app->make(IClient::class);
@@ -23,9 +21,7 @@ class BankHolidayServiceProviderTest extends LaravelTestCase
         $this->assertInstanceOf(Client::class, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenICacheIsRegisteredExpectConcreteClass()
     {
         $actual = $this->app->make(ICache::class);
@@ -33,9 +29,7 @@ class BankHolidayServiceProviderTest extends LaravelTestCase
         $this->assertInstanceOf(LaravelCacheDriver::class, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenIFileSystemIsRegisteredExpectConcreteClass()
     {
         $actual = $this->app->make(IFileSystem::class);
@@ -43,9 +37,7 @@ class BankHolidayServiceProviderTest extends LaravelTestCase
         $this->assertInstanceOf(PhpFileSystem::class, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenIBankHolidayIsRegisteredExpectConcreteClass()
     {
         $actual = $this->app->make(IBankHoliday::class);
@@ -53,9 +45,7 @@ class BankHolidayServiceProviderTest extends LaravelTestCase
         $this->assertInstanceOf(BankHoliday::class, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function givenAliasRegisteredExpectConcreteClass()
     {
         $actual = $this->app->make('bank-holiday');
